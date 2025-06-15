@@ -1,18 +1,15 @@
 import os
 import subprocess
+
 from faster_whisper import WhisperModel
 
 url = "https://www.youtube.com/watch?v=A0jA9rB06Zs"
 output_name = "audio"
 
 print("Baixando áudio do YouTube...")
-subprocess.run([
-    "yt-dlp",
-    "-x",
-    "--audio-format", "mp3",
-    "-o", f"{output_name}.%(ext)s",
-    url
-])
+subprocess.run(
+    ["yt-dlp", "-x", "--audio-format", "mp3", "-o", f"{output_name}.%(ext)s", url]
+)
 
 if os.path.exists("audio.mp4"):
     os.rename("audio.mp4", "audio.mp3")
@@ -35,5 +32,5 @@ print("Transcrição:\n")
 with open("transcricao.txt", "w", encoding="utf-8") as f:
     for segment in segments:
         linha = f"[{segment.start:.2f}s -> {segment.end:.2f}s] {segment.text}\n"
-        print(linha, end="")  
-        f.write(linha)        
+        print(linha, end="")
+        f.write(linha)
